@@ -1,0 +1,121 @@
+<html ang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Update 24X7 Admin</title>
+        <!-- jQuery needs to be placed before bootstrap -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Bootstrap Start -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+        <!-- Bootstrap End -->
+    
+    </head>
+    <body>
+
+    <!-- Nav bar Start-->
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container">
+    <a class="navbar-brand" href="#">Update 24X7 Admin</a> 
+    </div>
+    </nav>
+    <br><br><br><br>
+    <!-- Nav bar End-->
+
+    <div class="container">
+    <div class="row">
+        <!--/col-6-->
+        <div class="col-md-6"> 
+        <div class="panel">
+        <div class="panel-body">
+            <center>
+                <h5></h5>
+                <h5>REGISTER</h5>
+            </center>
+             <div class="panel panel-info">
+             <div class="panel-body">
+                <form action="/admin/register" method="POST">
+                    <div class="form-group">
+                        <label for="name" >Name</label>
+                        <input type="text" id="name" name="name" class="form-control" />   
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required />   
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" >Password</label>
+                        <input type="password" id="password" name="password" class="form-control" required />
+                    </div>
+                    
+                    <center>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="reset" class="btn btn-dark">Reset</button>
+                    </center>
+                    <% if (locals.msg) { %> 
+                    <div class="alert alert-info" role="alert" id="msg1">
+                        <%=msg%>
+                    </div>
+                    <% } %> 
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>                              
+        </div>
+        <!--/col-6-->
+        <div class="col-md-6"> 
+            <div class="panel">
+            <div class="panel-body">
+                <center>
+                    <h5></h5>
+                    <h5>LOG IN</h5>
+                </center>
+                 <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <form action="/admin/login" method="POST">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" required />
+                            </div>
+                            <div class="form-group">  
+                                <label for="password" >Password</label>
+                                <input type="password" id="password" name="password" class="form-control" required />
+                            </div>
+                           
+                            <center>
+                                    <button type="submit" class="btn btn-primary">Log In</button>
+                                    <button type="reset" class="btn btn-dark">Reset</button>
+                                    
+                            </center>
+                          
+                            <% if (locals.invalid) { %> 
+                            <div class="alert alert-info" role="alert" id="msg2">
+                                    <%=invalid%>
+                            </div>
+                            <% } %> 
+    
+                        
+                        </form>
+                    </div>
+                </div>
+        </div>
+        </div>                              
+        </div>
+        <!--/col-6-->
+    </div>
+    </div>
+</div>
+    <script>
+        // class selector
+        const message = $('.alert.alert-info')
+        if ( message.length ) setTimeout( () => {message.fadeOut( 'slow' );}, 3000 );
+        
+    </script>
+    </body>
+</html>
