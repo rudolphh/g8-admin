@@ -7,7 +7,13 @@ const newsModel = new Schema({
     url: {type:String},
     urlToImage: {type:String},
     publishedAt: {type:String},
-    insertTime: {type:Number}
+    insertTime: {type:Number},
+    category : {
+        type: String,
+        required: true,
+        enum : ['normal','sports'],
+        default: 'normal'
+    }
 })
 
 // model name : newslist

@@ -138,6 +138,15 @@
                                     <label for="publishedAt" >Published At</label>
                                     <input type="text" id="update_publishedAt" name="publishedAt" class="form-control" required />
                                 </div>
+                                <div class="form-check form-check-inline">
+
+                                    <input class="form-check-input" type="radio" name="category" id="normalRadio" value="normal">
+                                    <label class="form-check-label" for="normalRadio">Normal</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="category" id="sportsRadio" value="sports">
+                                    <label class="form-check-label" for="sportsRadio">Sports</label>
+                                  </div>
                             </form>
                         </div>
                 
@@ -172,6 +181,7 @@
             type: 'POST',
             url: '/admin/find_by_id',
             data: {id},
+            cache: false,
             success: function(data){
                     $("#update_id").attr("value", data[0]._id)
                     $("#update_title").attr("value", data[0].title);
@@ -179,6 +189,7 @@
                     $("#update_url").attr("value", data[0].url);
                     $("#update_urlToImage").attr("value", data[0].urlToImage);
                     $("#update_publishedAt").attr("value", data[0].publishedAt);
+                    $("input[name=category][value=" + data[0].category + "]").prop('checked', true);
                     $('#myModal').modal({show: true});
             },
             error: function(){
