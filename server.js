@@ -10,6 +10,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 
 const port = process.env.PORT || 4000;
+let localstorage= new LocalStorage('./Scratch')
 
 app.use(cors());
 app.use(express.urlencoded({extended:true}))
