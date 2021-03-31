@@ -141,3 +141,52 @@ io.sockets.on('connection',(socket)=>{
       }
   })
 })
+
+////////// contact form
+
+const Querylist = require('./models/Query_model')
+
+app.post('/addQuery', (req, res)=>{
+  //console.log('request.body: ',req.body)
+
+  //insert into db
+  let data=req.body
+
+  Querylist.create(
+    data, 
+    (err, data) => 
+      {
+        if(err) return res.status(500).send('There was a problem registering user')
+        console.log(`Inserted ... ${data} `)
+        //const htmlMsg = encodeURIComponent('Added Query DONE !');
+        //res.redirect('/admin/newsForm/?msg=' + htmlMsg)
+
+        //send email
+        const sgMail = require('@sendgrid/mail')
+        sgMail.setApiKey('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')
+
+        body=`Dear ${data.firstname} ${data.lastname},<br>We received your query (id: ${data._id}) and will respond shortly`
+        const msg = {
+          to: data.email, // Change to your recipient
+          //from: 'jazz7000@hotmail.com', // Change to your verified sender
+          from: {
+            email: 'jazz7000@hotmail.com',
+            name: 'Vadzim Matsiushonak'
+        },
+          subject: 'Your query received',
+          text: 'textTest',
+          html: body,
+        }
+        sgMail
+          .send(msg)
+          .then(() => {
+            console.log('Email sent')
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+
+        res.send({'isResponded':true, '_id':data._id})
+      }
+  )            
+})
