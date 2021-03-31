@@ -146,7 +146,6 @@ io.sockets.on('connection',(socket)=>{
 ////////// contact form
 
 const Querylist = require('./models/Query_model');
-console.log(process.env.SENGRID_API_KEY)
 
 app.post('/addQuery', (req, res)=>{
   //console.log('request.body: ',req.body)
@@ -167,13 +166,17 @@ app.post('/addQuery', (req, res)=>{
         const sgMail = require('@sendgrid/mail')
         sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-        body=`Dear ${data.firstname} ${data.lastname},<br>We received your query (id: ${data._id}) and will respond shortly`
+        body =`<p>Dear ${data.firstname} ${data.lastname},</p>`
+        body += `<p>We received your query (id: ${data._id}) and will respond shortly</p>`
+        body += "Thanks,<br>"
+        body += "G8 News Team"
+
         const msg = {
           to: data.email, // Change to your recipient
           //from: 'jazz7000@hotmail.com', // Change to your verified sender
           from: {
-            email: 'jazz7000@hotmail.com',
-            name: 'Vadzim Matsiushonak'
+            email: 'ru@rudyah.com',
+            name: 'G8 News Team'
         },
           subject: 'Your query received',
           text: 'textTest',
@@ -183,12 +186,14 @@ app.post('/addQuery', (req, res)=>{
           .send(msg)
           .then(() => {
             console.log('Email sent')
+            res.send(true)
           })
           .catch((error) => {
             console.error(error)
+            res.send(false)
           })
 
-        res.send({'isResponded':true, '_id':data._id})
+        
       }
   )            
 })
