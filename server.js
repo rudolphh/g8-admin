@@ -45,7 +45,7 @@ app.get('/top-news', (req, res) => {
   NewsList.find({ category: 'normal' }, (err, users) => {
       if(err) res.status(500).send(err);
       res.status(200).send(users);
-  }).limit(3);
+  }).sort({ insertTime: -1 }).limit(3);
 });
 
 app.get('/top-sports', (req, res) => {
@@ -53,7 +53,7 @@ app.get('/top-sports', (req, res) => {
   NewsList.find({ category: 'sports'}, (err, users) => {
       if(err) res.status(500).send(err);
       res.status(200).send(users);
-  }).limit(3);
+  }).sort({ insertTime: -1 }).limit(3);
 });
 
 app.get('/weather', (err, response) => {
