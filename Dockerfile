@@ -17,5 +17,5 @@ COPY . .
 
 # Sendgrid api key
 
-EXPOSE 4200
+EXPOSE 4000
 CMD [ "node", "start.js" ]
