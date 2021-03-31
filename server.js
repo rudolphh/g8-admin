@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const app = require('./app')
 const express = require('express')
 const cors = require('cors');
@@ -163,7 +164,7 @@ app.post('/addQuery', (req, res)=>{
 
         //send email
         const sgMail = require('@sendgrid/mail')
-        sgMail.setApiKey('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')
+        sgMail.setApiKey(process.env.SENGRID_API_KEY)
 
         body=`Dear ${data.firstname} ${data.lastname},<br>We received your query (id: ${data._id}) and will respond shortly`
         const msg = {
