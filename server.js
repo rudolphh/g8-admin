@@ -145,7 +145,8 @@ io.sockets.on('connection',(socket)=>{
 
 ////////// contact form
 
-const Querylist = require('./models/Query_model')
+const Querylist = require('./models/Query_model');
+console.log(process.env.SENGRID_API_KEY)
 
 app.post('/addQuery', (req, res)=>{
   //console.log('request.body: ',req.body)
@@ -164,7 +165,7 @@ app.post('/addQuery', (req, res)=>{
 
         //send email
         const sgMail = require('@sendgrid/mail')
-        sgMail.setApiKey(process.env.SENGRID_API_KEY)
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
         body=`Dear ${data.firstname} ${data.lastname},<br>We received your query (id: ${data._id}) and will respond shortly`
         const msg = {
