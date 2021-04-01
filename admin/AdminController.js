@@ -30,12 +30,13 @@ router.post('/login', (req, res) => {
       if (err) return res.status(500).send('Error on the server.');
       let htmlMsg
       if (!user) { 
-        htmlMsg = encodeURIComponent('Email not found, try again ...');
+        htmlMsg = encodeURIComponent('Email or password is invalid, try again ...');
         res.redirect('/?invalid=' + htmlMsg);
       }else{
         const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) {
-          return res.status(401).send({ auth: false, token: null });
+            htmlMsg = encodeURIComponent('Email or password is invalid, try again ...');
+            return res.redirect('/?invalid=' + htmlMsg);
         }
 
         var token = jwt.sign({ id: user._id }, config.secret, {
