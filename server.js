@@ -126,7 +126,7 @@ io.sockets.on('connection',(socket)=>{
 
       if(socket.nickname){
           let nickname=socket.nickname
-          let curDate = new Date().toLocaleTimeString();
+          let curDate = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
           let payload={
               message:data,
               nick:nickname,
