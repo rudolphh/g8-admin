@@ -10,6 +10,8 @@ const {LocalStorage} = require('node-localstorage');
 const http = require('http');
 const socketIO = require('socket.io');
 
+const frontHostURL = process.env.PROD ? process.env.PROD : "http://localhost:4200"
+
 const port = process.env.PORT || 4000;
 let localstorage= new LocalStorage('./Scratch')
 
@@ -84,12 +86,12 @@ app.get('/weather', (err, response) => {
 
 
 const server = app.listen(port, () => {
-  console.log('App started on ' + port);
+  console.log('App started on ' + frontHostURL);
 });
 
 let io = socketIO(server,{
   cors: {
-    origins: ['http://localhost:4200']
+    origins: [frontHostURL]
   }
 })
 
