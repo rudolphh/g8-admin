@@ -168,6 +168,11 @@ app.post('/addQuery', (req, res)=>{
         const sgMail = require('@sendgrid/mail')
         sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
+        text = `Dear ${data.firstname} ${data.lastname}, \n\n`;
+        text += `We received your query (id: ${data._id}) and will respond shortly. \n\n`;
+        text += "Thanks, \n";
+        text += "G8 News Team";
+
         body =`<p>Dear ${data.firstname} ${data.lastname},</p>`
         body += `<p>We received your query (id: ${data._id}) and will respond shortly</p>`
         body += "Thanks,<br>"
@@ -181,7 +186,7 @@ app.post('/addQuery', (req, res)=>{
             name: 'G8 News Team'
         },
           subject: 'Your query received',
-          text: 'textTest',
+          text: text,
           html: body,
         }
         sgMail
@@ -193,7 +198,22 @@ app.post('/addQuery', (req, res)=>{
           .catch((error) => {
             console.error(error)
             res.send(false)
-          })
+          });
+
+          sgMail.send({
+            to: 'rudolpharthur@gmail.com',
+            from: {
+              email: 'ru@rudyah.com',
+              name: 'G8 News Query'
+            },
+            subject: 'Story query submitted by user',
+            text: `From : ${data.firstname} ${data.lastname} \nEmail: ${data.email}\nQuery: ${data.query}`,
+            html: `<Email:>From : ${data.firstname} ${data.lastname}<br>Email: ${data.email}</p><p>Query: ${data.query}</p>`
+          }).then(()=> {
+            console.log('Admin email sent');
+          }).catch((error) => {
+            console.error(error);
+          });
 
         
       }
