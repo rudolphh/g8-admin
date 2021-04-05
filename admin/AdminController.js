@@ -16,11 +16,6 @@ const Newslist = require('../models/News_model')
 
 const app = express();
 app.set('view engine', 'ejs');
-app.set('views', './views');
-app.use(express.static(__dirname+'/public'));
-
-const session = require('express-session');
-router.use(session({secret: 'edurekaSecret1', resave: false, saveUninitialized: true}));
 
 // Login User
 router.post('/login', (req, res) => {
@@ -28,10 +23,12 @@ router.post('/login', (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
       console.log("/login : user => ", user)
       if (err) return res.status(500).send('Error on the server.');
+
       let htmlMsg
       if (!user) { 
         htmlMsg = encodeURIComponent('Email or password is invalid, try again ...');
         res.redirect('/?invalid=' + htmlMsg);
+
       }else{
         const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) {
@@ -96,13 +93,6 @@ router.get('/getNews', (req, res)=>{
     })
 });
 
-router.get('/top-news', (req, res) => {
-
-    Newslist.find({}, (err, users) => {
-        if(err) res.status(500).send(err);
-        res.status(200).send(users);
-    }).limit(3);
-});
 
 router.post('/find_by_id', (req,res)=>{
     const id = req.body.id

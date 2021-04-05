@@ -19,24 +19,11 @@ app.use(cors());
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
-const session = require('express-session')
-app.use(session({
-  secret: 'edurekaSecret',
-  resave: false,
-  saveUninitialized: true
-}));
-
-
 app.set('view engine', 'ejs')
-app.set('views', './views')
-
-let sess;
 
 const NewsList = require('./models/News_model');
 
 app.get('/',(req,res) => {
-    sess=req.session;
-    sess.email=" "
    
     res.render('signin',
       { invalid: req.query.invalid?req.query.invalid:'',
